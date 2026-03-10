@@ -1,0 +1,24 @@
+include:
+  - local: '/default_variables.yml'
+
+stages:
+  - test
+
+test_job:
+  stage: test
+  image: $TEST_IMAGE
+  script:
+    - echo "Running test pipeline"
+    - mkdir -p "$TEST_REPORT_DIR"
+    - echo "Put your test commands here"
+    - echo "<testsuite></testsuite>" > "$TEST_REPORT_DIR/junit.xml"
+  artifacts:
+    when: always
+    expire_in: 1 week
+    paths:
+      - $TEST_REPORT_DIR/
+    reports:
+      junit:
+        - $TEST_REPORT_DIR/junit.xml
+  rules:
+    - when: always

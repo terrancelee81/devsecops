@@ -1,0 +1,25 @@
+variables:
+  PROJECT_NAME: "my-project"
+  BUILD_IMAGE: "registry.example.com/devsecops/build-image:latest"
+  TEST_IMAGE: "registry.example.com/devsecops/test-image:latest"
+  DEPLOY_IMAGE: "registry.example.com/devsecops/deploy-image:latest"
+
+  ARTIFACT_DIR: "dist"
+  BUILD_DIR: "build_output"
+  TEST_REPORT_DIR: "test_reports"
+
+default:
+  tags:
+    - docker
+
+  interruptible: true
+
+  before_script:
+    - echo "Project: $PROJECT_NAME"
+    - echo "Pipeline source: $CI_PIPELINE_SOURCE"
+    - echo "Branch: $CI_COMMIT_BRANCH"
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - .cache/

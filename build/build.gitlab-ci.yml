@@ -1,0 +1,21 @@
+include:
+  - local: '/default_variables.yml'
+
+stages:
+  - build
+
+build_job:
+  stage: build
+  image: $BUILD_IMAGE
+  script:
+    - echo "Running build pipeline"
+    - mkdir -p "$BUILD_DIR"
+    - echo "Put your build commands here"
+    - echo "build complete" > "$BUILD_DIR/build.txt"
+  artifacts:
+    when: always
+    expire_in: 1 week
+    paths:
+      - $BUILD_DIR/
+  rules:
+    - when: always
